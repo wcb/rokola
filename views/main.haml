@@ -11,21 +11,32 @@
       #shade
         #wrapper
           #header
-            %h1 rokola
+            #logo
+              %h1 rokola
             #status
-              %h2 now playing
-              #cover
-                %img#song_cover{:src => "test.png"}
-              #details
-                - unless @song.nil?
-                  %h3#song_title #{@song.title}
-                  %span#song_artist #{@song.artist}
-                  %span#song_album #{@song.album}
-                - else
+              %h2 Now Playing
+              - unless @song.nil?
+                #cover
+                  %img#song_cover{:src => "test.png"}
+                #details
+                  %p#song_title #{@song.title}
+                  %p.lesser#song_artist #{@song.artist}
+                  %p.lesser#song_album #{@song.album}
+              - else
+                #details
                   %h3#song_title There are no songs playing at the moment. 
-                  %span#song_artist 
-                  %span#song_album 
+              - unless @next_song.nil?
+                #upnext
+                  %span.strong Up Next: 
+                  %span #{@next_song.title} by
+                  %span #{@next_song.artist}
+          %div.clear
           #suggest
             %h1 suggest
-            hello !
-          
+            #artistlist
+            %h2 Pink Floyd
+            .album
+              %h3 Dark Side of The Moon
+              %ol
+                %li First Song
+                %li Second Song

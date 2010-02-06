@@ -13,8 +13,12 @@ require 'fleakr'
 require 'rokola_base'
 
 helpers do 
-  def current_song
-  @@mpd.current_song
+  def get_current_song
+    @@mpd.current_song
+  end
+  def get_next_song
+    return nil if @@mpd.current_song.nil?
+    @@mpd.playlist[@@mpd.current_song.pos.to_i+1]
   end
   def current_splash(song)
     return "spotlight.png" if song.nil? or song.artist.nil? 
@@ -28,12 +32,21 @@ configure do
   puts 'Boostrapping'
   @@mpd = MPD.new 'localhost', 6600
   @@mpd.connect
+  
+  @token = 0
+  
 end
 
 get '/' do
-  @song = current_song
+  @song = get_current_song
+  @next_song = get_next_song
+  puts @next_song
   @splash = current_splash(@song)
   haml :main
+end
+
+post '/' do
+  params[:bob]
 end
 
 get '/stylesheet.css' do

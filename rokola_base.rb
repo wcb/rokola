@@ -4,7 +4,7 @@ Fleakr.api_key = '173ed7a1eb0371f9368b027057456c76'
 Fleakr.shared_secret = 'fa6c63b0746838cb'
 
 def matches_criteria(height,width)
-  height > 525 and width > 850 #and height < 800
+  height > 525 and width > 850 and height < 800
 end
 
 #WIP

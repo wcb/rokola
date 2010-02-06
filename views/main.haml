@@ -1,0 +1,31 @@
+!!! XML
+!!! Strict
+%html{html_attrs('en-en')}
+  %head
+    %title rokola
+    %link{:rel => "stylesheet", :href => "stylesheet.css", :type => "text/css"}
+    %script{:type => "text/javascript", :src => "mootools-1.2.4-core-yc.js"}
+    %script{:type => "text/javascript", :src => "script.js"}
+  %body
+    #background{:style => "background-image: url('#{@splash}')"}
+      #shade
+        #wrapper
+          #header
+            %h1 rokola
+            #status
+              %h2 now playing
+              #cover
+                %img#song_cover{:src => "test.png"}
+              #details
+                - unless @song.nil?
+                  %h3#song_title #{@song.title}
+                  %span#song_artist #{@song.artist}
+                  %span#song_album #{@song.album}
+                - else
+                  %h3#song_title There are no songs playing at the moment. 
+                  %span#song_artist 
+                  %span#song_album 
+          #suggest
+            %h1 suggest
+            hello !
+          

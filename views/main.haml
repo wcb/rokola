@@ -31,12 +31,14 @@
                   %span #{@next_song.title} by
                   %span #{@next_song.artist}
           %div.clear
-          #suggest
-            %h1 suggest
+          #library
+            %h1 Library
             #artistlist
-            %h2 Pink Floyd
-            .album
-              %h3 Dark Side of The Moon
-              %ol
-                %li First Song
-                %li Second Song
+              - @library.each_pair do |artist,albums|
+                %h2 #{artist}
+                - albums.each_pair do |album,tracks|
+                  .album
+                    %h3 #{album}
+                    %ol
+                      - tracks.each do |title|
+                        %li #{title}

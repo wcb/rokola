@@ -12,7 +12,12 @@ require 'fleakr'
 # Helpers 
 require 'rokola_base'
 
+require 'config'
+
 helpers do 
+  def quote (str)
+    str.gsub(/\\|"/) { |c| "\\#{c}" }
+  end
   def get_current_song
     @@mpd.current_song
   end
@@ -26,11 +31,42 @@ helpers do
     url = "spotlight.png" if url.nil?
   return url 
   end
+
+  def build_library
+    artists = @@mpd.artists
+    library = Hash.new
+
+    artists.each do |artist|
+      #print artist + "\n"
+      albums = @@mpd.albums(artist)
+      album_hash = Hash.new
+
+      albums.each do |album|
+        #print "   " + album + "\n"
+        titles = @@mpd.find('album',quote(album))
+        tracks=Array.new
+
+        titles.each do |title|
+          if title.title != nil
+            #print "   - " + title.title + "\n"
+            tracks << title.title
+          end
+        end
+
+        album_hash[album]=tracks
+
+      end
+      library[artist]=album_hash
+
+    end
+    return library
+  end
+
 end
 
 configure do
   puts 'Boostrapping'
-  @@mpd = MPD.new 'localhost', 6600
+  @@mpd = MPD.new Sinatra.options.mpdhost, Sinatra.options.mpdport
   @@mpd.connect
   
   @token = 0
@@ -41,6 +77,9 @@ get '/' do
   @song = get_current_song
   @next_song = get_next_song
   puts @next_song
+
+  @library = build_library
+
   @splash = current_splash(@song)
   haml :main
 end

@@ -1,4 +1,8 @@
-require 'md5'
+begin
+  require 'md5'
+rescue LoadError
+  require 'digest/md5'
+end
 
 Fleakr.api_key = '173ed7a1eb0371f9368b027057456c76'
 Fleakr.shared_secret = 'fa6c63b0746838cb'

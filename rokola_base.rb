@@ -7,6 +7,40 @@ end
 Fleakr.api_key = '173ed7a1eb0371f9368b027057456c76'
 Fleakr.shared_secret = 'fa6c63b0746838cb'
 
+def quote (str)
+  str.gsub(/\\|"/) { |c| "\\#{c}" }
+end
+
+def build_library
+  artists = @@mpd.artists
+  library = Hash.new
+
+  artists.each do |artist|
+    #print artist + "\n"
+    albums = @@mpd.albums(artist)
+    album_hash = Hash.new
+
+    albums.each do |album|
+      #print "   " + album + "\n"
+      titles = @@mpd.find('album',quote(album))
+      tracks=Array.new
+
+      titles.each do |title|
+        if title.title != nil
+          #print "   - " + title.title + "\n"
+          tracks << title.title
+        end
+      end
+
+      album_hash[album]=tracks
+
+    end
+    library[artist]=album_hash
+
+  end
+  return library
+end
+
 def matches_criteria(height,width)
   height > 525 and width > 850 and height < 800
 end

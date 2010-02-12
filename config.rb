@@ -1,2 +1,2 @@
-set :mpdhost ,     "192.168.1.48"
+set :mpdhost ,     "127.0.0.1"
 set :mpdport ,     6600

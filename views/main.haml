@@ -12,7 +12,6 @@
         #wrapper
           #header
             #logo
-              %h1 rokola
             #status
               %h2 Now Playing
               - unless @song.nil?
@@ -34,7 +33,7 @@
           #library
             %h1 Library
             #artistlist
-              - @library.each_pair do |artist,albums|
+              - @@library.each_pair do |artist,albums|
                 %h2 #{artist}
                 - albums.each_pair do |album,tracks|
                   .album

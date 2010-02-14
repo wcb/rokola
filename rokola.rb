@@ -15,8 +15,16 @@ require 'rokola_base'
 require 'config'
 
 helpers do 
+  def get_playlist
+    @@mpd.playlist
+  end
   def get_current_song
     @@mpd.current_song
+  end
+  def get_current_position
+    pos=@@mpd.status["song"]
+    return 0 if pos.nil?
+    return pos.to_i
   end
   def get_next_song
     return nil if @@mpd.current_song.nil?
@@ -35,7 +43,11 @@ configure do
   @@mpd = MPD.new Sinatra.options.mpdhost, Sinatra.options.mpdport
   puts 'Connecting to MPD'
   @@mpd.connect
+  puts 'Done.'
+  puts 'Building library'
   @@library = build_library
+  puts 'Done. '#bell
+  @@queue_end = 0
   @token = 0
 end
 
@@ -44,12 +56,25 @@ get '/' do
   @next_song = get_next_song
   puts @next_song
 
+  #Gets the whole playlist.  If this lags, we can use song_with_id( songid )
+  @playlist = get_playlist
+  @playlist_position = get_current_position
+
+  puts @@mpd.status
+
   @splash = current_splash(@song)
+
   haml :main
 end
 
-post '/' do
-  params[:bob]
+get '/add/*.*' do
+  path = params["splat"].join
+  puts "Queueing" + path
+  puts @@mpd.status
+
+  #enqueue(path)
+
+  redirect('/')
 end
 
 get '/stylesheet.css' do

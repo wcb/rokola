@@ -25,10 +25,10 @@ def build_library
       titles = @@mpd.find('album',quote(album))
       tracks=Array.new
 
-      titles.each do |title|
-        if title.title != nil
+      titles.each do |song|
+        if song.title != nil
           #print "   - " + title.title + "\n"
-          tracks << title.title
+          tracks << song
         end
       end
 
@@ -92,3 +92,4 @@ def get_artwork_lastfm(artist)
   end
   return maxurl
 end
+

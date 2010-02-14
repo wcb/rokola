@@ -30,6 +30,13 @@
                   %span #{@next_song.title} by
                   %span #{@next_song.artist}
           %div.clear
+          - if @@queue_end > @playlist_position
+            #queue
+              %h1 Queue
+              %ol
+                - for i in @playlist_position .. @@queue_end
+                  %li #{@playlist[i].artist} - #{@playlist[i].title}
+                  
           #library
             %h1 Library
             #artistlist
@@ -39,5 +46,6 @@
                   .album
                     %h3 #{album}
                     %ol
-                      - tracks.each do |title|
-                        %li #{title}
+                      - tracks.each do |song|
+                        %li 
+                          %a{:href=>"/add/#{song.file}"} #{song.title}

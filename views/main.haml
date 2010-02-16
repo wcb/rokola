@@ -16,7 +16,7 @@
               %h2 Now Playing
               - unless @song.nil?
                 #cover
-                  %img#song_cover{:src => "test.png"}
+                  %img#song_cover{:src => "#{@cover}"}
                 #details
                   %p#song_title #{@song.title}
                   %p.lesser#song_artist #{@song.artist}
@@ -34,7 +34,7 @@
             #queue
               %h1 Queue
               %ol
-                - for i in @playlist_position .. @@queue_end-1
+                - for i in @playlist_position+1 .. @@queue_end-1
                   %li #{@playlist[i].artist} - #{@playlist[i].title}
                   
           #library

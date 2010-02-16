@@ -60,7 +60,7 @@ def get_cached_image(song, url)
 end
 
 ## WIP, very unreliable. Should be last resort. 
-def get_artwork_flickr(artist)
+def get_artist_artwork_flickr(artist)
   photos = Fleakr.search({:text => artist, :sort => "relevance"})
   photo = photos.detect do |p| 
     !p.large.nil? and !p.large.url.nil? and matches_criteria(p.large.height.to_i, p.large.width.to_i)
@@ -70,7 +70,7 @@ def get_artwork_flickr(artist)
 end
 
 
-def get_artwork_lastfm(artist)
+def get_artist_artwork_lastfm(artist)
   http = Net::HTTP.new("ws.audioscrobbler.com")
   maxcoeff = 0
   maxurl = nil

@@ -34,7 +34,7 @@
             #queue
               %h1 Queue
               %ol
-                - for i in @playlist_position .. @@queue_end
+                - for i in @playlist_position .. @@queue_end-1
                   %li #{@playlist[i].artist} - #{@playlist[i].title}
                   
           #library

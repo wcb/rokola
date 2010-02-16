@@ -32,9 +32,25 @@ helpers do
   end
   def current_splash(song)
     return "spotlight.png" if song.nil? or song.artist.nil? 
-    url = get_artwork_lastfm(song.artist)
+    url = get_artist_artwork_lastfm(song.artist)
     url = "spotlight.png" if url.nil?
-  return url 
+    return url 
+  end
+  def validate_queue_end
+    pos=get_current_position
+    if pos<get_current_position
+      @@queue_end=get_current_position+1
+    end
+  end
+  def enqueue(path)
+    begin
+      @@mpd.add(path)
+    rescue
+      return
+    end
+    validate_queue_end
+    @@mpd.move(get_playlist.length-1,@@queue_end)
+    @@queue_end+=1
   end
 end
 
@@ -68,11 +84,11 @@ get '/' do
 end
 
 get '/add/*.*' do
-  path = params["splat"].join
+  path = params["splat"].join('.')
   puts "Queueing" + path
   puts @@mpd.status
 
-  #enqueue(path)
+  enqueue(path)
 
   redirect('/')
 end

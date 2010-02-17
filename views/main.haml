@@ -1,51 +1,24 @@
-!!! XML
-!!! Strict
-%html{html_attrs('en-en')}
-  %head
-    %title rokola
-    %link{:rel => "stylesheet", :href => "stylesheet.css", :type => "text/css"}
-    %script{:type => "text/javascript", :src => "mootools-1.2.4-core-yc.js"}
-    %script{:type => "text/javascript", :src => "script.js"}
-  %body
-    #background{:style => "background-image: url('#{@splash}')"}
-      #shade
-        #wrapper
-          #header
-            #logo
-            #status
-              %h2 Now Playing
-              - unless @song.nil?
-                #cover
-                  %img#song_cover{:src => "#{@cover}"}
-                #details
-                  %p#song_title #{@song.title}
-                  %p.lesser#song_artist #{@song.artist}
-                  %p.lesser#song_album #{@song.album}
-              - else
-                #details
-                  %h3#song_title There are no songs playing at the moment. 
-              - unless @next_song.nil?
-                #upnext
-                  %span.strong Up Next: 
-                  %span #{@next_song.title} by
-                  %span #{@next_song.artist}
-          %div.clear
-          - if @@queue_end > @playlist_position
-            #queue
-              %h1 Queue
-              %ol
-                - for i in @playlist_position+1 .. @@queue_end-1
-                  %li #{@playlist[i].artist} - #{@playlist[i].title}
-                  
-          #library
-            %h1 Library
-            #artistlist
-              - @@library.each_pair do |artist,albums|
-                %h2 #{artist}
-                - albums.each_pair do |album,tracks|
-                  .album
-                    %h3 #{album}
-                    %ol
-                      - tracks.each do |song|
-                        %li 
-                          %a{:href=>"/add/#{song.file}"} #{song.title}
+#header
+  #logo
+  #stats
+  #status
+    = haml (:status, :layout => false)
+%div.clear
+#library
+  %h1 queue a song
+  #artistlist
+    - @@library.each_pair do |artist,albums|
+      %h2 #{artist}
+      - albums.each_pair do |album,tracks|
+        .album
+          %h3 #{album}
+          %ol
+            - tracks.each do |song|
+              %li 
+                %a{:href=>"/add/#{song.file}"} #{song.title}
+#queue
+  %h1 playlist
+  - if @@queue_end > @playlist_position
+    %ol
+      - for i in @playlist_position+1 .. @@queue_end-1
+        %li #{@playlist[i].artist} - #{@playlist[i].title}

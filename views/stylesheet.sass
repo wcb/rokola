@@ -3,6 +3,7 @@ body
   margin: 0
   padding: 0
   color: #fff
+  font-size: 0.75em
   font-family: "Lucida Grande","Lucida Sans","Luxi Sans","Trebuchet MS","Bitstream Vera Sans",helvetica,verdana,arial,sans-serif
 
 a
@@ -41,28 +42,37 @@ a:visited
 h1
   margin: 0
   padding: 0
+  padding-left: 10px
   display: inline
+  font-size: 18px
 
-#status
-  background: #111
-  float: right
-  margin: 10px 0 20px 150px
-  height: 115px
-  width: 450px
-  font-size: 12px
-  font-weight: normal
-
-#status h2
-  margin: 0
-  padding: 10px 0 10px 10px
-  font-size: 14px
-  font-weight: bold
-  color: #ccc
-  
 .clear
   clear: both
   width: 100%
 
+  
+#suggest
+  float: left
+
+#queue
+  float: right
+
+#status
+  float: right
+  margin: 40px 0 35px 150px
+  height: 115px
+  width: 450px
+  font-size: 11px
+  font-weight: normal
+
+#status h2
+  margin: 0
+  padding: 2px 10px 5px 10px
+  font-size: 12px
+  font-style: italic
+  font-weight: normal
+  color: #eee
+  
 #status #cover
   float: left
   width: 65px
@@ -76,24 +86,71 @@ h1
 #status #details #song_title
   margin: 0
   padding: 2px 5px
-  font-size: 14px
+  font-size: 15px
   font-weight: bold
+
+#status #details #song_artist, #status #details #song_album
+  margin: 0
+  padding: 0px 5px
+  font-size: 12px
+  font-weight: normal
+  font-style: italic
 
 #status #details .lesser
   padding: 2px 5px
   margin: 0
   
 #status #upnext
-  background: #444
-  padding: 6px 12px
+  padding: 6px 12px 2px
   height: 14px
   width: 426px
-  font-size: 11px
+  font-size: 10px
   font-weight: normal
   clear: both
-  
-#suggest
+
+#artistlist
+  height: 300px
+  overflow-y: scroll
+
+#library
+  width: 50%
   float: left
 
 #queue
+  width: 50%
   float: right
+
+table
+  border-spacing: 0
+
+td, th, tr, table
+  padding: 0
+  margin: 0
+
+.rstl 
+  background: url('rstl.png') top left no-repeat
+  width: 5px
+  height: 5px
+
+.rsbg
+  background: url('rsbg.png')
+  width: 440px
+
+.rsbbg
+  background: url('rsbbg.png')
+  width: 440px
+
+.rstr
+  background: url('rstr.png') top right no-repeat
+  width: 5px
+  height: 5px
+
+.rsbl
+  background: url('rsbl.png') bottom left no-repeat
+  width: 5px
+  height: 5px
+
+.rsbr
+  background: url('rsbr.png') bottom right no-repeat
+  width: 5px
+  height: 5px

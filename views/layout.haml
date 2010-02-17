@@ -1,0 +1,13 @@
+!!! XML
+!!! Strict
+%html{html_attrs('en-en')}
+  %head
+    %title rokola
+    %link{:rel => "stylesheet", :href => "stylesheet.css", :type => "text/css"}
+    %script{:type => "text/javascript", :src => "mootools-1.2.4-core-yc.js"}
+    %script{:type => "text/javascript", :src => "script.js"}
+  %body
+    #background{:style => "background-image: url('#{@splash}')"}
+      #shade
+        #wrapper
+          = yield

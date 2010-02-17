@@ -1,0 +1,31 @@
+%table#dual
+  %tr
+    %td.rstl
+    %td.rsbg
+    %td.rstr
+  %tr
+    %td.rsbg{:colspan => 3}
+      %h2 Now Playing
+      - unless @song.nil?
+        #cover
+          %img#song_cover{:src => "#{@cover}"}
+        #details
+          %p#song_title #{@song.title}
+          %p.lesser#song_artist #{@song.artist}
+          %p.lesser#song_album #{@song.album}
+      - else
+        #details
+          %h3#song_title There are no songs playing at the moment. 
+  %tr
+    %td.rsbbg{:colspan => 3}
+      #upnext
+        %span.strong Up Next: 
+        - unless @next_song.nil?
+          %span #{@next_song.title} by
+          %span #{@next_song.artist}
+  %tr
+    %td.rsbl
+    %td.rsbbg
+    %td.rsbr
+
+

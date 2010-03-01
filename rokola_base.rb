@@ -71,31 +71,35 @@ end
 
 
 def get_artist_artwork_lastfm(artist)
-  http = Net::HTTP.new("ws.audioscrobbler.com")
   maxcoeff = 0
   maxurl = nil
-  http.start do |http|
-    request = Net::HTTP::Get.new("/2.0/?method=artist.getimages&artist=#{Rack::Utils.escape(artist)}&api_key=b25b959554ed76058ac220b7b2e0a026")
-    response = http.request(request)
-    puts response.value
-    images = response.body.scan(/<size name="original" width="(\d+)" height="(\d+)">(.*)<\/size>/n) do |i| 
-      coeff = 0
-      width = i[0].to_i
-      height = i[1].to_i
-      url = i[2]
-      coeff= Math.sqrt(width**2 + height**2)
-      if coeff > maxcoeff and matches_criteria(height, width)
-        maxcoeff = coeff 
-        maxurl = url 
+  begin
+    http = Net::HTTP.new("ws.audioscrobbler.com")
+    http.start do |http|
+      request = Net::HTTP::Get.new("/2.0/?method=artist.getimages&artist=#{Rack::Utils.escape(artist)}&api_key=b25b959554ed76058ac220b7b2e0a026")
+      response = http.request(request)
+      puts response.value
+      images = response.body.scan(/<size name="original" width="(\d+)" height="(\d+)">(.*)<\/size>/n) do |i| 
+        coeff = 0
+        width = i[0].to_i
+        height = i[1].to_i
+        url = i[2]
+        coeff= Math.sqrt(width**2 + height**2)
+        if coeff > maxcoeff and matches_criteria(height, width)
+          maxcoeff = coeff 
+          maxurl = url 
+        end
       end
     end
+  rescue
   end
   return maxurl
 end
 
 def get_album_artwork_local(song)
   #Let's not waste our time
-  return nil unless File.exist?(Sinatra::Application.public + "music/")
+  return nil unless File.exist?(Sinatra::Application.public + "/music")
+  print "Searching for local art."
   #TODO: move to config
   ['folder','Folder','Album Art','album art',
    'cover','front'].each do |filename|
@@ -105,7 +109,7 @@ def get_album_artwork_local(song)
       rindex=0 if rindex.nil?
       path = song.file[0..rindex]
       image = "music/" + path + filename + "." + ext
-      return image if File.exist?(Sinatra::Application.public + image)
+      return image if File.exist?(Sinatra::Application.public + "/" + image)
       #TODO: Case-sensitivity of extension?
     end
   end
@@ -113,14 +117,17 @@ def get_album_artwork_local(song)
 end
 
 def get_album_artwork_lastfm(song)
-  http = Net::HTTP.new("ws.audioscrobbler.com")
-  http.start do |http|
-    request = Net::HTTP::Get.new("/2.0/?method=album.getinfo&artist="+
-                                 Rack::Utils.escape(song.artist) +"&album="+
-                                 Rack::Utils.escape(song.album)+
-                                 "&api_key=b25b959554ed76058ac220b7b2e0a026")
-    response = http.request(request)
-    image = response.body[/<image size="medium">(.*)<\/image>/n,1]
-    return image
+  begin
+    http = Net::HTTP.new("ws.audioscrobbler.com")
+    http.start do |http|
+      request = Net::HTTP::Get.new("/2.0/?method=album.getinfo&artist="+
+                                   Rack::Utils.escape(song.artist) +"&album="+
+                                   Rack::Utils.escape(song.album)+
+                                   "&api_key=b25b959554ed76058ac220b7b2e0a026")
+      response = http.request(request)
+      image = response.body[/<image size="medium">(.*)<\/image>/n,1]
+      return image
+    end
+  rescue
   end
 end

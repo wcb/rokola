@@ -1,12 +1,11 @@
 #header
-  #logo
   #stats
   #status
     = haml :status, :layout => false
 %div.clear
 #library
-  %h1 queue a song
   #artistlist
+    %h1 Jukebox library
     - @@library.each_pair do |artist,albums|
       %h2 #{artist}
       - albums.each_pair do |album,tracks|
@@ -17,7 +16,7 @@
               %li 
                 %a{:href=>"/add/#{song.file}"} #{song.title}
 #queue
-  %h1 playlist
+  %h1 Queued songs
   - if @@queue_end > @playlist_position
     %ol
       - for i in @playlist_position+1 .. @@queue_end-1

@@ -14,7 +14,7 @@
           %ol
             - tracks.each do |song|
               %li 
-                %a{:href=>"/add/#{song.file}"} #{song.title}
+                %a{:href=>"/add/#{CGI::escape(song.file)}"} #{song.title}
 #queue
   %h1 Queued songs
   - if @@queue_end > @playlist_position

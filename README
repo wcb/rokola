@@ -1,2 +1,30 @@
-Inspired by the modren Jukebox at Chez Lucien, backinspired by Giles Bowkett.
+See screenshot.png for a hopefully self-explanatory demo.
+
+1. Get all the dependencies
+2. Run MPD, configure it to point to your music directory
+3. Create a playlist (to play when there are no songs queued)
+2. Run ruby rokola.rb
+3. Invite all your friends to a geek-oriented party (bring laptops)
+4. Give them the URL: http://your-ip:4567
+5. Click on songs to queue them!
+
+Inspired by the modren Jukebox at Chez Lucien, and by Giles Bowkett.
 Use of a Token Bucket inspired by the guy who queued up a dozen Elvis songs. ;)
+
+REQUIREMENTS
+mpd			The Music Player Daemon.
+Ruby			tested with 1.8 and 1.9
+Rubygems		
+Sinatra			
+librmpd
+
+
+LOGIC BEHIND THE QUEUE
+...wip.
+
+TODO
+ - Update with AJAX
+ - Test all possible cases in a real environment
+   . What happens when the playlist ends?
+   . What happens when the playlist loops?
+   . Should we support tampering by a user directly connected to MPD?

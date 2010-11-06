@@ -6,7 +6,7 @@
 #library
   #artistlist
     %h1 Jukebox library
-    - @@library.each_pair do |artist,albums|
+    - $library.each_pair do |artist,albums|
       %h2 #{artist}
       - albums.each_pair do |album,tracks|
         .album
@@ -17,7 +17,7 @@
                 %a{:href=>"/add/#{CGI::escape(song.file)}"} #{song.title}
 #queue
   %h1 Queued songs
-  - if @@queue_end > @playlist_position
+  - if $queue_end > @playlist_position
     %ol
-      - for i in @playlist_position+1 .. @@queue_end-1
+      - for i in @playlist_position+1 .. $queue_end-1
         %li #{@playlist[i].artist} - #{@playlist[i].title}

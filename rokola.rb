@@ -50,8 +50,8 @@ helpers do
     #if the end of the queue is *before* the current position, it needs to be
     #re-initialized.
     pos=get_current_position
-    if pos>@@queue_end
-      @@queue_end=get_current_position+1
+    if pos>$queue_end
+      $queue_end=get_current_position+1
     end
   end
   def enqueue(path)
@@ -61,21 +61,21 @@ helpers do
       return
     end
     validate_queue_end
-    @@mpd.move(get_playlist.length-1,@@queue_end)
-    @@queue_end+=1
+    @@mpd.move(get_playlist.length-1,$queue_end)
+    $queue_end+=1
   end
 end
 
 configure do
   puts 'Boostrapping'
-  @@mpd = MPD.new Sinatra.options.mpdhost, Sinatra.options.mpdport
+  @@mpd = MPD.new settings.mpdhost, settings.mpdport
   puts 'Connecting to MPD'
   @@mpd.connect
   puts 'Done.'
   puts 'Building library'
-  @@library = build_library
+  $library = build_library
   puts 'Done. '#bell
-  @@queue_end = 0
+  $queue_end = 0
   @token = 0
 end
 

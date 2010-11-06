@@ -15,9 +15,12 @@ REQUIREMENTS
 mpd			The Music Player Daemon.
 Ruby			tested with 1.8 and 1.9
 Rubygems		
-Sinatra			
-librmpd
-
+Sinatra			gem
+librmpd			gem
+json			gem
+haml			gem
+blankslate		gem
+fleakr			gem, will be removed soon
 
 LOGIC BEHIND THE QUEUE
 ...wip.
